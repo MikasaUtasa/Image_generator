@@ -1,24 +1,26 @@
 from PIL import Image
 import numpy as np
+import argparse
 
-def Create():
 
-    image = Image.open('ryan.jpg')
+def Create(args):
+    image = Image.open(args.picture)
     image = image.convert('RGB')
-    #image.thumbnail((200, 200))
+    # image.thumbnail((200, 200))
     data = np.asarray(image)
     data = data[0::6]
     string = ""
-    chars = {0:" ", 1:"^", 2:"/", 3:"#", 4:"⠿"}
+    chars = {0: " ", 1: "^", 2: "/", 3: "#", 4: "⠿"}
     with open('Obraz.txt', 'w', encoding="utf-8") as f:
         for row in data:
             line = ""
             for char in row:
-                line += chars[(sum(char//3))//60]
+                line += chars[(sum(char // 3)) // 60]
             f.write(line + '\n')
 
-def Print():
-    image = Image.open('ryan.jpg')
+
+def Print(args):
+    image = Image.open(args.picture)
     image = image.convert('RGB')
     image.thumbnail((200, 200))
     data = np.asarray(image)
@@ -33,7 +35,9 @@ def Print():
 
 
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    Print()
+if _name_ == '_main_':
+    parser = argparse.ArgumentParser(description='ASCII Image gererator')
+    parser.add_argument('-p', '--picture')
+    args = parser.parse_args()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    Print(args)
